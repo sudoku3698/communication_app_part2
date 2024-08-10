@@ -16,7 +16,9 @@ export default function Chats() {
       return
     }
     const date = new Date()
-    const time = `${date.getHours()}:${date.getMinutes()}`
+    const hour = date.getHours() % 12 || 12;
+    const amPm = (date.getHours() < 12) ? "AM" : "PM";
+    const time = `${hour}:${date.getMinutes().toString().padStart(2, '0')} ${amPm}`
     const chat = {
       userName: loggedInUser.name,
       message: message,
