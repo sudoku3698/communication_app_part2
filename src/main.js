@@ -9,7 +9,7 @@ import Nav from './nav';
 import Login from './login';
 import Landing from './landing';
 import NotFound from './notfound';
-import RegisterSuccessful from './RegisterSuccessful';
+import RegisterSuccessful from './register_successful';
 class Main extends React.Component {
   constructor(props) {
     super(props);
