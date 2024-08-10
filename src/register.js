@@ -55,7 +55,7 @@ function Register() {
     setEmail('')
     setPassword('')
     setConfirmPassword('')
-    navigate('/users')
+    navigate('/success_register')
   }
 
   return (

@@ -9,6 +9,7 @@ import Nav from './nav';
 import Login from './login';
 import Landing from './landing';
 import NotFound from './notfound';
+import RegisterSuccessful from './RegisterSuccessful';
 class Main extends React.Component {
   constructor(props) {
     super(props);
@@ -31,6 +32,7 @@ class Main extends React.Component {
               <Route path="documents" element={<RequireAuth><Documents /></RequireAuth>} />
             </Route>
             <Route path="register" element={<GuestAuth><Register /></GuestAuth>} />
+            <Route path="success_register" element={<GuestAuth><RegisterSuccessful /></GuestAuth>} />
             <Route path="login" element={<GuestAuth><Login /></GuestAuth>} />
             <Route path="landing" element={<GuestAuth><Landing /></GuestAuth>} />
             <Route path="*" element={<NotFound />} />
