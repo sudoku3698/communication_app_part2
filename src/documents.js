@@ -87,8 +87,8 @@ export default function Documents() {
   return (
     <div>
       <h2>Documents</h2>
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Button onClick={handleModalShow} className='mb-2 '>Add Document</Button>
+      <div className='d-flex justify-content-between mb-3'>
+        <Button onClick={handleModalShow} className='ms-auto'>Add Document</Button>
       </div>
       <Modal show={showModal} onHide={handleModalClose}>
         <Modal.Header closeButton>
