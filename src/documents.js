@@ -60,6 +60,8 @@ export default function Documents() {
     if (Object.keys(error).length > 0) {
       setErrors(error);
       return;
+    }else{
+      setErrors({});
     }
     if (editMode) {
       const updatedDocuments = [...documents];

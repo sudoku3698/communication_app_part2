@@ -16,8 +16,14 @@ export default function Users() {
   const [email, setEmail] = useState('');
   const [error,setError]=useState('')
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setShow(false);
+    setError('')
+  }
+  const handleShow = () => {
+    setShow(true); 
+    setError('')
+  } ;
 
   const handleDelete = (index) => {
     const updatedUsers = [...users]
@@ -134,6 +140,3 @@ export default function Users() {
     </>
   )
 }
-
-
-
