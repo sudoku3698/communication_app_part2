@@ -24,7 +24,7 @@ class Main extends React.Component {
       <div>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Nav />}>
+            <Route path="/" element={<RequireAuth><Nav /></RequireAuth>}>
               <Route path="welcome" element={<RequireAuth><Welcome /></RequireAuth>} />
               <Route index element={(<RequireAuth><Welcome/></RequireAuth>)} />
               <Route path="chats" element={<RequireAuth><Chats/></RequireAuth>} />
