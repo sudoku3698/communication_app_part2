@@ -37,6 +37,7 @@ export default function Chats() {
             <div className="card-body p-0">
               <ul className="chat-box list-unstyled" ref={(element) => {
                   if (element) {
+                    console.log(element.scrollHeight)
                     element.scrollTop = element.scrollHeight;
                   }
                 }}>

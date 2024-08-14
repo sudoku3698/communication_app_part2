@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Modal, Button } from 'react-bootstrap'
+import { Button, Modal, Form, Table } from 'react-bootstrap';
 // import './Users.css'
 
 export default function Users() {
@@ -14,15 +14,15 @@ export default function Users() {
   const [editIndex, setEditIndex] = useState(null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [error,setError]=useState('')
+  const [error,setError]=useState({})
 
   const handleClose = () => {
     setShow(false);
-    setError('')
+    setError({})
   }
   const handleShow = () => {
     setShow(true); 
-    setError('')
+    setError({})
   } ;
 
   const handleDelete = (index) => {
@@ -46,19 +46,23 @@ export default function Users() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
+    const error = {};
     if (editIndex !== null) {
       if (!name) {
-        setError('Please enter a name')
-        return
+        error.name = 'Please enter a name';
       }
       if (!email) {
-        setError('Please enter an email')
-        return
+        error.email = 'Please enter an email';
       }
       if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-        setError('Invalid email address')
-        return
+        error.email = 'Invalid email address';
+      }
+
+      if (Object.keys(error).length > 0) {
+        setError(error);
+        return;
+      }else{
+        setError({});
       }
       const updatedUsers = [...users]
       const currentUser = updatedUsers[editIndex]
@@ -85,7 +89,7 @@ export default function Users() {
 
   return (<>
       <h2>Users</h2>
-      <table className="table table-striped">
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th scope="col">Name</th>
@@ -107,24 +111,23 @@ export default function Users() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Create User</Modal.Title>
           </Modal.Header>
           <form onSubmit={handleSubmit}>
-            {error && <div className="alert alert-danger mt-2" role="alert">
-              {error}
-            </div>}
             <Modal.Body>
-            <div className="form-group">
-              <label htmlFor="name">Name</label>
-              <input type="text" className="form-control" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} />
-            </div>
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input type="text" className="form-control" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled={loggedInUser?.email === email} />
-            </div>
+            <Form.Group className="mb-3">
+              <Form.Label>Name</Form.Label>
+              <Form.Control type="text" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} isInvalid={error.name} />
+              <Form.Control.Feedback type="invalid">{error.name}</Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control type="text" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} isInvalid={error.email} disabled={loggedInUser?.email === email} />
+              <Form.Control.Feedback type="invalid">{error.email}</Form.Control.Feedback>
+            </Form.Group>
               
             </Modal.Body>
             <Modal.Footer>

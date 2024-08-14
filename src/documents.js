@@ -20,6 +20,7 @@ export default function Documents() {
   };
 
   const handleModalShow = () => {
+    console.log(editMode)
     setShowModal(true);
   };
 
@@ -37,6 +38,15 @@ export default function Documents() {
     localStorage.setItem('documents', JSON.stringify(updatedDocuments));
   };
 
+  const handleAdd = () => {
+    setEditMode(false);
+    setEditIndex(null);
+    setInputs({
+      label: '',
+      filename: ''
+    });
+    handleModalShow();
+  }
   const handleEdit = (index) => {
     const document = documents[index];
     setEditMode(true);
@@ -90,14 +100,15 @@ export default function Documents() {
     <div>
       <h2>Documents</h2>
       <div className='d-flex justify-content-between mb-3'>
-        <Button onClick={handleModalShow} className='ms-auto'>Add Document</Button>
+        <Button onClick={handleAdd} className='ms-auto'>Add Document</Button>
       </div>
       <Modal show={showModal} onHide={handleModalClose}>
+      <Form onSubmit={handleAddEdit}>
         <Modal.Header closeButton>
           <Modal.Title>{editMode ? 'Edit Document' : 'Add Document'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+         
             <Form.Group controlId="label">
               <Form.Label>Label</Form.Label>
               <Form.Control type="text" name="label" value={inputs.label} onChange={handleInputChange} isInvalid={!!errors.label} />
@@ -108,16 +119,17 @@ export default function Documents() {
               <Form.Control type="text" name="filename" value={inputs.filename} onChange={handleInputChange} isInvalid={!!errors.filename} />
               <Form.Control.Feedback type="invalid">{errors.filename}</Form.Control.Feedback>
             </Form.Group>
-          </Form>
+         
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleModalClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleAddEdit}>
+          <Button variant="primary" type="submit">
             {editMode ? 'Save Changes' : 'Add Document'}
           </Button>
         </Modal.Footer>
+        </Form>
       </Modal>
       <Table striped bordered hover>
         <thead>
