@@ -17,7 +17,7 @@ function Login() {
             return
         }
 
-        if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             setError('Invalid email address')
             return
         }
@@ -29,7 +29,7 @@ function Login() {
 
         if (user) {
             localStorage.setItem('loggedInUser', JSON.stringify(user))
-            navigate('/welcome')
+            navigate('/login_success')
         } else {
             setError('Invalid email or password')
         }

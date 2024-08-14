@@ -21,7 +21,7 @@ function Register() {
     if (!email) {
       isValid = false;
       errors.email = 'Email is required';
-    } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       isValid = false;
       errors.email = 'Invalid email address';
     }

@@ -10,6 +10,7 @@ import Login from './login';
 import Landing from './landing';
 import NotFound from './notfound';
 import RegisterSuccessful from './register_successful';
+import LoginSucess from './login_success';
 class Main extends React.Component {
   constructor(props) {
     super(props);
@@ -26,6 +27,8 @@ class Main extends React.Component {
           <Routes>
             <Route path="/" element={<RequireAuth><Nav /></RequireAuth>}>
               <Route path="welcome" element={<RequireAuth><Welcome /></RequireAuth>} />
+              <Route path="login_success" element={<RequireAuth><LoginSucess /></RequireAuth>} />
+              
               <Route index element={(<RequireAuth><Welcome/></RequireAuth>)} />
               <Route path="chats" element={<RequireAuth><Chats/></RequireAuth>} />
               <Route path="users" element={<RequireAuth><Users /></RequireAuth>} />

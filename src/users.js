@@ -54,7 +54,7 @@ export default function Users() {
       if (!email) {
         error.email = 'Please enter an email';
       }
-      if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         error.email = 'Invalid email address';
       }
 
