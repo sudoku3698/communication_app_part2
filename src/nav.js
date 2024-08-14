@@ -1,10 +1,11 @@
 import React from 'react'
 import { Link, Outlet,useNavigate } from 'react-router-dom'
+import { deleteLoggedInUser } from './db/datasource';
 
 export default function Nav() {
     const navigate = useNavigate();
     function logout() {
-        localStorage.removeItem('loggedInUser')
+        deleteLoggedInUser()
         navigate('/login')
     }
     return (<>

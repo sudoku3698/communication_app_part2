@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Modal, Form, Table } from 'react-bootstrap';
 import Swal from 'sweetalert2'
+import { getUsers, getLoggedInUser,setDBUsers } from './db/datasource'
 // import './Users.css'
 
 export default function Users() {
-  const [users, setUsers] = useState(JSON.parse(localStorage.getItem('users')) || [])
-  const [loggedInUser] = useState(JSON.parse(localStorage.getItem('loggedInUser')))
+  const [users, setUsers] = useState(getUsers())
+  const [loggedInUser] = useState(getLoggedInUser())
 
   useEffect(() => {
-    localStorage.setItem('users', JSON.stringify(users))
+    setDBUsers(users)
   }, [users])
 
   const [show, setShow] = useState(false);

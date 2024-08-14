@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import { getUsers,setLoggedInUser } from './db/datasource'
 
 function Login() {
     const [email, setEmail] = useState('')
@@ -9,7 +10,7 @@ function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const users = JSON.parse(localStorage.getItem('users')) || []
+        const users = getUsers()
         const user = users.find(user => user.email === email && user.password === password)
 
         if (!email) {
@@ -28,7 +29,7 @@ function Login() {
         }
 
         if (user) {
-            localStorage.setItem('loggedInUser', JSON.stringify(user))
+            setLoggedInUser(user)
             navigate('/login_success')
         } else {
             setError('Invalid email or password')

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form, Table } from 'react-bootstrap';
 import Swal from 'sweetalert2'
+import { getDocuments,setDbDocuments } from './db/datasource'
 export default function Documents() {
   const [showModal, setShowModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -10,8 +11,11 @@ export default function Documents() {
     filename: ''
   });
   const [errors, setErrors] = useState({});
-  const [documents, setDocuments] = useState(JSON.parse(localStorage.getItem('documents')) || []);
+  const [documents, setDocuments] = useState(getDocuments());
 
+  useEffect(() => {
+    setDbDocuments(documents);
+  },[documents])
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setInputs(prevInputs => ({
@@ -47,7 +51,6 @@ export default function Documents() {
       const updatedDocuments = [...documents];
       updatedDocuments.splice(index, 1);
       setDocuments(updatedDocuments);
-      localStorage.setItem('documents', JSON.stringify(updatedDocuments));
       Swal.fire({
         title: 'Deleted!',
         text: `${documents[index].label} has been deleted.`,
@@ -99,7 +102,6 @@ export default function Documents() {
         ...inputs
       };
       setDocuments(updatedDocuments);
-      localStorage.setItem('documents', JSON.stringify(updatedDocuments));
       setEditMode(false);
       setEditIndex(null);
     } else {
@@ -107,7 +109,6 @@ export default function Documents() {
         ...inputs
       };
       setDocuments([...documents, newDocument]);
-      localStorage.setItem('documents', JSON.stringify([...documents, newDocument]));
     }
     handleModalClose();
     setInputs({

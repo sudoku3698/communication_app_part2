@@ -1,7 +1,7 @@
 import React from 'react'
-
+import { getLoggedInUser } from './db/datasource'
 function LoginSucess() {
-  const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'))
+  const loggedInUser = getLoggedInUser()
   const userName = loggedInUser ? loggedInUser.name : ''
   return (
     <div className='text-center'>

@@ -11,6 +11,7 @@ import Landing from './landing';
 import NotFound from './notfound';
 import RegisterSuccessful from './register_successful';
 import LoginSucess from './login_success';
+import { getLoggedInUser } from './db/datasource';
 class Main extends React.Component {
   constructor(props) {
     super(props);
@@ -49,12 +50,12 @@ class Main extends React.Component {
 
 
 function GuestAuth({ children }) {
-  const user = JSON.parse(localStorage.getItem("loggedInUser"))
+  const user = getLoggedInUser()
   return !user ? children : <Navigate to="/" />
 }
 
 function RequireAuth({ children }) {
-  const user = JSON.parse(localStorage.getItem("loggedInUser"))
+  const user = getLoggedInUser()
   return user ? children : <Navigate to="/login" />
 }
 

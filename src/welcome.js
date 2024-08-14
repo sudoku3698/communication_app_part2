@@ -1,7 +1,8 @@
 import React from 'react'
+import { getLoggedInUser } from './db/datasource'
 
 function welcome() {
-  const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'))
+  const loggedInUser = getLoggedInUser()
   const userName = loggedInUser ? loggedInUser.name : ''
   return (
     <div>

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import './css/chat.css'
+import { getLoggedInUser,getChats,setDbChats } from './db/datasource'
 export default function Chats() {
-  const [loggedInUser] = useState(JSON.parse(localStorage.getItem('loggedInUser')))
-  const [chats, setChats] = useState(JSON.parse(localStorage.getItem('chats')) || [])
+  const [loggedInUser] = useState(getLoggedInUser())
+  const [chats, setChats] = useState(getChats())
   const [message, setMessage] = useState('')
 
   useEffect(() => {
-    localStorage.setItem('chats', JSON.stringify(chats))
+    setDbChats(chats)
   }, [chats])
 
   const handleSubmit = (e) => {

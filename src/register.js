@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import "./css/golbal.css"
+import {getUsers, setDBUsers} from './db/datasource'
 
 function Register() {
   const [name, setName] = useState('')
@@ -28,6 +29,9 @@ function Register() {
     if (!password) {
       isValid = false;
       errors.password = 'Password is required';
+    } else if (password.length < 8) {
+      isValid = false;
+      errors.password = 'Password must be at least 8 characters long';
     }
     if (!confirmPassword) {
       isValid = false;
@@ -44,7 +48,7 @@ function Register() {
     e.preventDefault()
     if (!validateForm()) return;
 
-    const users = JSON.parse(localStorage.getItem('users') || '[]')
+    const users = getUsers()
     const existUser = users.find(user => user.email === email)
     if(existUser){
       setError({...error, email: 'Email already exists'})
@@ -55,7 +59,7 @@ function Register() {
       email,
       password
     }
-    localStorage.setItem('users', JSON.stringify([...users, user]))
+    setDBUsers([...users, user])
     setName('')
     setEmail('')
     setPassword('')

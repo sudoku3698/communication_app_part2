@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 export default function NotFound() {
   return (
@@ -12,6 +13,9 @@ export default function NotFound() {
           </p>
         </Col>
       </Row>
+          <p className="lead text-center">
+            <Link to="/">Go to Home</Link>
+          </p>
     </Container>
   )
 }
