@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Modal, Form, Table } from 'react-bootstrap';
+import Swal from 'sweetalert2'
 // import './Users.css'
 
 export default function Users() {
@@ -14,27 +15,38 @@ export default function Users() {
   const [editIndex, setEditIndex] = useState(null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [error,setError]=useState({})
+  const [error, setError] = useState({})
 
   const handleClose = () => {
     setShow(false);
     setError({})
   }
   const handleShow = () => {
-    setShow(true); 
+    setShow(true);
     setError({})
-  } ;
+  };
 
   const handleDelete = (index) => {
     const updatedUsers = [...users]
     const userToDelete = updatedUsers[index]
-    
 
-    const confirmDelete = window.confirm(`Are you sure you want to delete ${userToDelete.name}?`)
-    if (confirmDelete) {
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `You want to delete ${userToDelete.name}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (!result.isConfirmed) {
+        return
+      }
       updatedUsers.splice(index, 1)
       setUsers(updatedUsers)
-    }
+    })
+
   }
 
   const handleEdit = (index) => {
@@ -61,7 +73,7 @@ export default function Users() {
       if (Object.keys(error).length > 0) {
         setError(error);
         return;
-      }else{
+      } else {
         setError({});
       }
       const updatedUsers = [...users]
@@ -77,7 +89,7 @@ export default function Users() {
     } else {
       setError('')
       const updatedUsers = [...users]
-      updatedUsers[editIndex] = { ...updatedUsers[editIndex], name:name, email:email }
+      updatedUsers[editIndex] = { ...updatedUsers[editIndex], name: name, email: email }
       setUsers(updatedUsers)
     }
     setEditIndex(null)
@@ -88,58 +100,58 @@ export default function Users() {
 
 
   return (<>
-      <h2>Users</h2>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Action</th>
+    <h2>Users</h2>
+    <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {users.map((user, index) => (
+          <tr key={index}>
+            <td>{user.name}</td>
+            <td>{user.email}</td>
+            <td>
+              <button onClick={() => handleEdit(index)} className="btn btn-primary btn-sm me-2">Edit</button>
+              {loggedInUser !== null && loggedInUser.email !== users[index].email && (
+                <button onClick={() => handleDelete(index)} className="btn btn-danger btn-sm">Delete</button>
+              )}
+            </td>
           </tr>
-        </thead>
-        <tbody>
-            {users.map((user, index) => (
-              <tr key={index}>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>
-                  <button onClick={() => handleEdit(index)} className="btn btn-primary btn-sm me-2">Edit</button>
-                  {loggedInUser !== null && loggedInUser.email !== users[index].email && (
-                    <button onClick={() => handleDelete(index)} className="btn btn-danger btn-sm">Delete</button>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Create User</Modal.Title>
-          </Modal.Header>
-          <form onSubmit={handleSubmit}>
-            <Modal.Body>
-            <Form.Group className="mb-3">
-              <Form.Label>Name</Form.Label>
-              <Form.Control type="text" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} isInvalid={error.name} />
-              <Form.Control.Feedback type="invalid">{error.name}</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="text" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} isInvalid={error.email} disabled={loggedInUser?.email === email} />
-              <Form.Control.Feedback type="invalid">{error.email}</Form.Control.Feedback>
-            </Form.Group>
-              
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                Close
-              </Button>
-              <Button type="submit" variant="primary">
-                Save Changes
-              </Button>
-            </Modal.Footer>
-          </form>
-        </Modal>
-    </>
+        ))}
+      </tbody>
+    </Table>
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Create User</Modal.Title>
+      </Modal.Header>
+      <form onSubmit={handleSubmit}>
+        <Modal.Body>
+          <Form.Group className="mb-3">
+            <Form.Label>Name</Form.Label>
+            <Form.Control type="text" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} isInvalid={error.name} />
+            <Form.Control.Feedback type="invalid">{error.name}</Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Email</Form.Label>
+            <Form.Control type="text" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} isInvalid={error.email} disabled={loggedInUser?.email === email} />
+            <Form.Control.Feedback type="invalid">{error.email}</Form.Control.Feedback>
+          </Form.Group>
+
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button type="submit" variant="primary">
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </form>
+    </Modal>
+  </>
   )
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form, Table } from 'react-bootstrap';
+import Swal from 'sweetalert2'
 export default function Documents() {
   const [showModal, setShowModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -30,12 +31,25 @@ export default function Documents() {
 
 
   const handleDelete = (index) => {
-    const confirmDelete = window.confirm(`Are you sure you want to delete ${documents[index].label}?`);
-    if (!confirmDelete) return;
-    const updatedDocuments = [...documents];
-    updatedDocuments.splice(index, 1);
-    setDocuments(updatedDocuments);
-    localStorage.setItem('documents', JSON.stringify(updatedDocuments));
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `You want to delete ${documents[index].label}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((confirmDelete) => {
+      if (!confirmDelete.isConfirmed) {
+        return;
+      }
+      const updatedDocuments = [...documents];
+      updatedDocuments.splice(index, 1);
+      setDocuments(updatedDocuments);
+      localStorage.setItem('documents', JSON.stringify(updatedDocuments));
+    });
+
   };
 
   const handleAdd = () => {
@@ -70,7 +84,7 @@ export default function Documents() {
     if (Object.keys(error).length > 0) {
       setErrors(error);
       return;
-    }else{
+    } else {
       setErrors({});
     }
     if (editMode) {
@@ -103,12 +117,12 @@ export default function Documents() {
         <Button onClick={handleAdd} className='ms-auto'>Add Document</Button>
       </div>
       <Modal show={showModal} onHide={handleModalClose}>
-      <Form onSubmit={handleAddEdit}>
-        <Modal.Header closeButton>
-          <Modal.Title>{editMode ? 'Edit Document' : 'Add Document'}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-         
+        <Form onSubmit={handleAddEdit}>
+          <Modal.Header closeButton>
+            <Modal.Title>{editMode ? 'Edit Document' : 'Add Document'}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+
             <Form.Group controlId="label">
               <Form.Label>Label</Form.Label>
               <Form.Control type="text" name="label" value={inputs.label} onChange={handleInputChange} isInvalid={!!errors.label} />
@@ -119,16 +133,16 @@ export default function Documents() {
               <Form.Control type="text" name="filename" value={inputs.filename} onChange={handleInputChange} isInvalid={!!errors.filename} />
               <Form.Control.Feedback type="invalid">{errors.filename}</Form.Control.Feedback>
             </Form.Group>
-         
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleModalClose}>
-            Close
-          </Button>
-          <Button variant="primary" type="submit">
-            {editMode ? 'Save Changes' : 'Add Document'}
-          </Button>
-        </Modal.Footer>
+
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleModalClose}>
+              Close
+            </Button>
+            <Button variant="primary" type="submit">
+              {editMode ? 'Save Changes' : 'Add Document'}
+            </Button>
+          </Modal.Footer>
         </Form>
       </Modal>
       <Table striped bordered hover>
