@@ -48,6 +48,12 @@ export default function Documents() {
       updatedDocuments.splice(index, 1);
       setDocuments(updatedDocuments);
       localStorage.setItem('documents', JSON.stringify(updatedDocuments));
+      Swal.fire({
+        title: 'Deleted!',
+        text: `${documents[index].label} has been deleted.`,
+        icon: 'success',
+        confirmButtonText: 'OK'
+      })
     });
 
   };

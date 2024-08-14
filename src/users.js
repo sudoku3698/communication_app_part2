@@ -45,6 +45,12 @@ export default function Users() {
       }
       updatedUsers.splice(index, 1)
       setUsers(updatedUsers)
+      Swal.fire({
+        title: 'Deleted!',
+        text: `${userToDelete.name} has been deleted.`,
+        icon: 'success',
+        confirmButtonText: 'OK'
+      })
     })
 
   }
