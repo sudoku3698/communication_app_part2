@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { Button, Modal, Form, Table } from 'react-bootstrap';
 import Swal from 'sweetalert2'
 import { getUsers, getLoggedInUser, setDBUsers } from './db/datasource'
-// import './Users.css'
 
 export default function Users() {
   const [users, setUsers] = useState(getUsers())
