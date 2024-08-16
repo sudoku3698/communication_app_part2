@@ -13,9 +13,9 @@ export default function NotFound() {
           </p>
         </Col>
       </Row>
-          <p className="lead text-center">
-            <Link to="/">Go to Home</Link>
-          </p>
+      <p className="lead text-center">
+        <Link to="/">Go to Home</Link>
+      </p>
     </Container>
   )
 }

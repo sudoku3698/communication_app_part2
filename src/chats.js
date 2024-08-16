@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './css/chat.css'
-import { getLoggedInUser,getChats,setDbChats } from './db/datasource'
+import { getLoggedInUser, getChats, setDbChats } from './db/datasource'
 export default function Chats() {
   const [loggedInUser] = useState(getLoggedInUser())
   const [chats, setChats] = useState(getChats())
@@ -37,11 +37,11 @@ export default function Chats() {
             <div className="card-header">Chats</div>
             <div className="card-body p-0">
               <ul className="chat-box list-unstyled" ref={(element) => {
-                  if (element) {
-                    console.log(element.scrollHeight)
-                    element.scrollTop = element.scrollHeight;
-                  }
-                }}>
+                if (element) {
+                  console.log(element.scrollHeight)
+                  element.scrollTop = element.scrollHeight;
+                }
+              }}>
                 {chats.map((chat, index) => (
                   <li key={index} className="p-2">
                     <div className={`align-items-center d-flex mb-3 ${chat.userName === loggedInUser.name ? 'justify-content-end' : ''}`}>

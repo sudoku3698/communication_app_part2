@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form, Table } from 'react-bootstrap';
 import Swal from 'sweetalert2'
-import { getDocuments,setDbDocuments } from './db/datasource'
+import { getDocuments, setDbDocuments } from './db/datasource'
 export default function Documents() {
   const [showModal, setShowModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -15,7 +15,8 @@ export default function Documents() {
 
   useEffect(() => {
     setDbDocuments(documents);
-  },[documents])
+  }, [documents])
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setInputs(prevInputs => ({

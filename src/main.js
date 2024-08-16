@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Users from './users';
 import Welcome from './welcome';
 import Documents from './documents';
@@ -29,9 +29,9 @@ class Main extends React.Component {
             <Route path="/" element={<RequireAuth><Nav /></RequireAuth>}>
               <Route path="welcome" element={<RequireAuth><Welcome /></RequireAuth>} />
               <Route path="login_success" element={<RequireAuth><LoginSucess /></RequireAuth>} />
-              
-              <Route index element={(<RequireAuth><Welcome/></RequireAuth>)} />
-              <Route path="chats" element={<RequireAuth><Chats/></RequireAuth>} />
+
+              <Route index element={(<RequireAuth><Welcome /></RequireAuth>)} />
+              <Route path="chats" element={<RequireAuth><Chats /></RequireAuth>} />
               <Route path="users" element={<RequireAuth><Users /></RequireAuth>} />
               <Route path="documents" element={<RequireAuth><Documents /></RequireAuth>} />
             </Route>

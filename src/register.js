@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import "./css/golbal.css"
-import {getUsers, setDBUsers} from './db/datasource'
+import { getUsers, setDBUsers } from './db/datasource'
 
 function Register() {
   const [name, setName] = useState('')
@@ -50,8 +50,8 @@ function Register() {
 
     const users = getUsers()
     const existUser = users.find(user => user.email === email)
-    if(existUser){
-      setError({...error, email: 'Email already exists'})
+    if (existUser) {
+      setError({ ...error, email: 'Email already exists' })
       return
     }
     const user = {
@@ -68,37 +68,37 @@ function Register() {
   }
 
   const removeError = (field) => {
-    setError({...error, [field]: ''})
+    setError({ ...error, [field]: '' })
   }
 
   return (
     <>
-      <div className ="container">
-        <h1 className ="text-center">Register</h1>
-        <div className ="form-container">
+      <div className="container">
+        <h1 className="text-center">Register</h1>
+        <div className="form-container">
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="name">Name</label>
-              <input placeholder="Enter Name" type="text" className={`form-control ${error.name ? 'is-invalid' : ''}`} name="name" value={name} onChange={(e) => {removeError('name'); setName(e.target.value)}} />
+              <input placeholder="Enter Name" type="text" className={`form-control ${error.name ? 'is-invalid' : ''}`} name="name" value={name} onChange={(e) => { removeError('name'); setName(e.target.value) }} />
               {error.name && <div className="invalid-feedback">{error.name}</div>}
             </div>
             <div className="form-group">
               <label htmlFor="email">Email</label>
-              <input placeholder="Enter Email" type="email" className={`form-control ${error.email ? 'is-invalid' : ''}`} name="email" value={email} onChange={(e) => {removeError('email'); setEmail(e.target.value)}} />
+              <input placeholder="Enter Email" type="email" className={`form-control ${error.email ? 'is-invalid' : ''}`} name="email" value={email} onChange={(e) => { removeError('email'); setEmail(e.target.value) }} />
               {error.email && <div className="invalid-feedback">{error.email}</div>}
             </div>
             <div className="form-group">
               <label htmlFor="password">Password</label>
-              <input placeholder="Enter Password" type="password" className={`form-control ${error.password ? 'is-invalid' : ''}`} name="password" value={password} onChange={(e) => {removeError('password'); setPassword(e.target.value)}} />
+              <input placeholder="Enter Password" type="password" className={`form-control ${error.password ? 'is-invalid' : ''}`} name="password" value={password} onChange={(e) => { removeError('password'); setPassword(e.target.value) }} />
               {error.password && <div className="invalid-feedback">{error.password}</div>}
             </div>
             <div className="form-group">
               <label htmlFor="confirmPassword">Confirm Password</label>
-              <input placeholder="Confirm Password" type="password" className={`form-control ${error.confirmPassword ? 'is-invalid' : ''}`} name="confirmPassword" value={confirmPassword} onChange={(e) => {removeError('confirmPassword'); setConfirmPassword(e.target.value)}} />
+              <input placeholder="Confirm Password" type="password" className={`form-control ${error.confirmPassword ? 'is-invalid' : ''}`} name="confirmPassword" value={confirmPassword} onChange={(e) => { removeError('confirmPassword'); setConfirmPassword(e.target.value) }} />
               {error.confirmPassword && <div className="invalid-feedback">{error.confirmPassword}</div>}
             </div>
             <div className="form-group text-center mt-2">
-              <Link to="/login" className ="btn btn-link">Login</Link>
+              <Link to="/login" className="btn btn-link">Login</Link>
               <button type="submit" className="btn btn-primary">Register</button>
             </div>
           </form>

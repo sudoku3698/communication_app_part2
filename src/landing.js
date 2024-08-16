@@ -10,7 +10,7 @@ function Landing() {
         <Link to="/login" className="btn btn-primary mb-3 mt-3">Login</Link>
         <h5 className="mb-3 mt-5">New Users</h5>
         <Link to="/register" className="btn btn-primary mb-3 mt-3">Register</Link>
-    </div>
+      </div>
     </div>
   )
 }
